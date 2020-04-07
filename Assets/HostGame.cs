@@ -31,12 +31,11 @@ public class HostGame : MonoBehaviour {
     public void CreateServer() {
         NetworkingManager.Singleton.OnClientConnectedCallback += clientId => { Debug.Log($"Client connected {clientId}"); };
         NetworkingManager.Singleton.OnClientDisconnectCallback += clientId => { Debug.Log($"Client disconnected {clientId}"); };
-        NetworkingManager.Singleton.OnServerStarted += () => {
-            Debug.Log("Server started");
-            CreateServerEnvironment();
-        };
-
-        NetworkingManager.Singleton.StartHost();
+        SceneManager.LoadScene("InteractionScene");
+        SceneManager.sceneLoaded += (arg0, arg1) =>
+        {
+            NetworkingManager.Singleton.StartHost();
+        };  
     }
 
     private void CreateServerEnvironment() {
